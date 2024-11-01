@@ -1,0 +1,27 @@
+{
+    "name": "postgre_db_connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "database.hostname": "postgres",
+        "database.port": "5432",
+        "database.user": "postgres",
+        "database.password": "postgres",
+        "database.dbname": "postgres",
+        "topic.prefix": "dbserver1",
+        "schema.include.list": "public",
+        "table.whitelist": "public.table_a",
+        "plugin.name": "pgoutput",
+        "database.server.id": "1",
+        "database.history": "io.debezium.relational.history.FileDatabaseHistory",
+        "database.history.file.filename": "/tmp/dbhistory.dat",
+        "transforms": "route",
+        "transforms.route.type": "org.apache.kafka.connect.transforms.RegexRouter",
+        "transforms.route.regex": "([^.]+)\\.([^.]+)\\.table_a",
+        "transforms.route.replacement": "table_a",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable": "false",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false"
+    }
+}
